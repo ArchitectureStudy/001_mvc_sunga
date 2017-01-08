@@ -43,8 +43,12 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
+<<<<<<< HEAD
 Pods/
 podfile.lock
+=======
+# Pods/
+>>>>>>> 9ac80adc512cf61d446b6ecefe855fac1685abe6
 
 # Carthage
 #
@@ -63,4 +67,8 @@ Carthage/Build
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+<<<<<<< HEAD
 fastlane/test_output
+=======
+fastlane/test_output
+>>>>>>> 9ac80adc512cf61d446b6ecefe855fac1685abe6
