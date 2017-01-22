@@ -8,6 +8,8 @@ target 'MVCProject' do
     pod 'RxSwift'
     pod 'RxCocoa'
     pod 'RxDataSources'
+    pod 'SDWebImage'
+    pod 'RxKeyboard'
 end
 
 post_install do |installer|

@@ -7,41 +7,24 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-
-class IssueCell: UITableViewCell {
-    @IBOutlet var idOutlet: UILabel!
-    @IBOutlet var titleLabel: UILabel!
-    
-    override func prepareForReuse() {
-        idOutlet.text = ""
-        titleLabel.text = ""
-    }
-}
 
 class IssuesViewController: UIViewController {
 
-    let disposeBag = DisposeBag()
     @IBOutlet var tableView: UITableView!
-    var issuesSubject: PublishSubject<[Issue]>?
     var datasource:[Issue] = []
+    var viewPresenter: IssuesViewPresenter!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        issuesSubject = Issues.instance.issuesSuject
-        issuesSubject?.subscribe(onNext: { [unowned self] issues in
-            self.datasource = issues
-            self.tableView.reloadData()
-        }).addDisposableTo(disposeBag)
-        Issues.instance.find(user: "JakeWharton", repo: "DiskLruCache")
+        viewPresenter = IssuesViewPresenter(vc: self)
+        tableView.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }
 
 extension IssuesViewController: UITableViewDataSource {
@@ -54,8 +37,16 @@ extension IssuesViewController: UITableViewDataSource {
             return IssueCell()
         }
         let issue = datasource[indexPath.row]
-        cell.idOutlet.text = "\(issue.id)"
+        cell.idOutlet.text = "\(issue.number)"
         cell.titleLabel.text =  "\(issue.title)"
+        cell.commentCountLabel.text = "\(issue.commentCount)"
         return cell
     }
 }
+
+extension IssuesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewPresenter.pushDetailView(indexPath: indexPath)
+    }
+}
+
